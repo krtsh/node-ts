@@ -9,17 +9,17 @@ export class UserController extends BaseController {
         super(logger);
         this.bindRoutes([
             {
-				path: '/register',
-				method: 'post',
-				func: this.register,
-				
-			},
-			{
-				path: '/login',
-				method: 'post',
-				func: this.login,
-				
-			},
+                path: '/register',
+                method: 'post',
+                func: this.register,
+
+            },
+            {
+                path: '/login',
+                method: 'post',
+                func: this.login,
+
+            },
         ])
 
     }
@@ -27,7 +27,7 @@ export class UserController extends BaseController {
     login(req: Request, res: Response, next: NextFunction) {
         this.ok(res, 'login')
     }
-    
+
     register(req: Request, res: Response, next: NextFunction) {
         this.ok(res, 'register')
     }

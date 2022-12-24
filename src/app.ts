@@ -9,35 +9,32 @@ import 'reflect-metadata';
 
 @injectable()
 export class App {
-    app: Express;
-    server: Server;
-    port: number;
+	app: Express;
+	server: Server;
+	port: number;
 
-    constructor(
-        @inject(TYPES.ILogger) private loggerService: ILogger,
-        @inject(TYPES.UserController) private userController: UserController,
-        @inject(TYPES.ExceptionFilter) private exceptionFilter: ExceptionFilter,
+	constructor(
+		@inject(TYPES.ILogger) private loggerService: ILogger,
+		@inject(TYPES.UserController) private userController: UserController,
+		@inject(TYPES.ExceptionFilter) private exceptionFilter: ExceptionFilter,
+	) {
+		this.app = express();
+		this.port = 8000;
+		this.server = this.app.listen();
+	}
 
-    ) {
-        this.app = express();
-        this.port = 8000;
-        this.server = this.app.listen();
-    }
+	useRoutes() {
+		this.app.use('/users', this.userController.router);
+	}
 
+	useExceptionFilters() {
+		this.app.use(this.exceptionFilter.catch.bind(this.exceptionFilter));
+	}
 
-    useRoutes() {
-        this.app.use('/users', this.userController.router);
-    }
-
-    useExceptionFilters() {
-        this.app.use(this.exceptionFilter.catch.bind(this.exceptionFilter));
-    }
-
-    public async init() {
-        this.useRoutes();
-        this.useExceptionFilters();
-        this.server = this.app.listen(this.port)
-        this.loggerService.log(`Started on ${this.port}`);
-
-    }
+	public async init() {
+		this.useRoutes();
+		this.useExceptionFilters();
+		this.server = this.app.listen(this.port);
+		this.loggerService.log(`Started on ${this.port}`);
+	}
 }

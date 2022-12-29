@@ -67,8 +67,8 @@ export class UserController extends BaseController implements IUserController {
 		this.ok(res, { email: result.email, id: result.id });
 	}
 
-	info(req: Request, res: Response, next: NextFunction): void {
-		console.log();
+	info({ user }: Request, res: Response, next: NextFunction): void {
+		this.ok(res, { email: user });
 	}
 
 	private signJWT(email: string, secret: string): Promise<string> {

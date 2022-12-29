@@ -46,6 +46,6 @@ export class App {
 		this.useExceptionFilters();
 		await this.prismaService.connect();
 		this.server = this.app.listen(this.port);
-		this.loggerService.log(`Started on ${this.port}`);
+		this.loggerService.log(`[Server] Started on: ${this.port}`);
 	}
 }
